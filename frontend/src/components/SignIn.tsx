@@ -115,6 +115,12 @@ const SignIn: React.FC = () => {
               {isLoading ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
+          <div className="text-sm text-center mt-4">
+            <span className="text-gray-600">Don't have an account? </span>
+            <a href="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
+              Sign up
+            </a>
+          </div>
         </form>
       </div>
     </div>
