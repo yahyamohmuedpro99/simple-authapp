@@ -34,10 +34,17 @@ export class AuthService {
     // Generate JWT token
     const token = this.generateToken(user._id.toString());
 
-    return { token };
+    return { 
+      token,
+      user: {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email
+      }
+    };
   }
 
-  async signIn(signInDto: SignInDto): Promise<{ token: string }> {
+  async signIn(signInDto: SignInDto): Promise<{ token: string, user: { id: string, name: string, email: string } }> {
     const { email, password } = signInDto;
 
     // Find user by email
@@ -55,13 +62,28 @@ export class AuthService {
     // Generate JWT token
     const token = this.generateToken(user._id.toString());
 
-    return { token };
+    return { 
+      token,
+      user: {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email
+      }
+    };
   }
 
   private generateToken(userId: string): string {
-    return jwt.sign({ userId }, process.env.JWT_SECRET || 'your-secret-key', {
-      expiresIn: '24h',
-    });
+    const user = this.userModel.findById(userId);
+    return jwt.sign(
+      { 
+        userId,
+        name: user.name
+      },
+      process.env.JWT_SECRET || 'your-secret-key',
+      {
+        expiresIn: '24h',
+      }
+    );
   }
 
   async validateUser(userId: string): Promise<UserDocument> {

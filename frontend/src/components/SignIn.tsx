@@ -38,7 +38,7 @@ const SignIn: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await axios.post('http://localhost:3000/auth/signin', formData);
-      login(response.data.token);
+      login(response.data.token, response.data.user);
       navigate('/app');
     } catch (error: any) {
       if (error.response?.data?.message) {
