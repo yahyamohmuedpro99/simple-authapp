@@ -11,7 +11,7 @@ const ProtectedApp: React.FC = () => {
       <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 space-y-6">
         <div className="text-center">
           <h2 className="text-4xl font-extrabold text-gray-900">Welcome to Your Dashboard</h2>
-          <p className="mt-4 text-xl text-gray-600">Hello, {user?.name || 'User'}! 👋</p>
+          <p className="mt-4 text-xl text-gray-600">Hello, <b>{user?.name || 'User'}! </b>👋</p>
         </div>
         <div className="border-t border-gray-200 pt-6">
           <p className="text-center text-gray-500">You're successfully logged in to the protected area.</p>

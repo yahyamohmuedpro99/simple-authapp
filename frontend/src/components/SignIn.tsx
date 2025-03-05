@@ -37,11 +37,11 @@ const SignIn: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:3000/auth/signin', formData);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signin`, formData); 
       login(response.data.token, response.data.user);
+
       navigate('/app');
-    } catch (error: any) {
-      if (error.response?.data?.message) {
+    } catch (error: any) {      if (error.response?.data?.message) {
         setErrors({ submit: error.response.data.message });
       } else {
         setErrors({ submit: 'An error occurred during sign in' });

@@ -12,7 +12,7 @@ export class AuthService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
-  async signUp(signUpDto: SignUpDto): Promise<{ token: string }> {
+  async signUp(signUpDto: SignUpDto): Promise<{ token: string, user: { id: string, name: string, email: string } }> {
     const { email, password, name } = signUpDto;
 
     // Check if user exists
@@ -32,7 +32,7 @@ export class AuthService {
     });
 
     // Generate JWT token
-    const token = this.generateToken(user._id.toString());
+    const token = this.generateToken(user._id.toString(),user.name);
 
     return { 
       token,
@@ -60,7 +60,7 @@ export class AuthService {
     }
 
     // Generate JWT token
-    const token = this.generateToken(user._id.toString());
+    const token = this.generateToken(user._id.toString(),user.name);
 
     return { 
       token,
@@ -72,12 +72,12 @@ export class AuthService {
     };
   }
 
-  private generateToken(userId: string): string {
+  private generateToken(userId: string,name:string): string {
     const user = this.userModel.findById(userId);
     return jwt.sign(
       { 
         userId,
-        name: user.name
+        user:name
       },
       process.env.JWT_SECRET || 'your-secret-key',
       {
